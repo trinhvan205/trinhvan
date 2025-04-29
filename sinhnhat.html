@@ -1,135 +1,173 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Chúc Mừng Sinh Nhật Em Yêu</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       padding: 0;
-      background: url('https://images.unsplash.com/photo-1511988617509-a57c8a288659?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
-      background-size: cover;
+      background: linear-gradient(120deg, #ff9a9e, #fad0c4);
       font-family: 'Segoe UI', sans-serif;
-      color: white;
-      text-align: center;
       overflow: hidden;
     }
 
     .container {
-      background-color: rgba(0, 0, 0, 0.5);
-      padding: 50px;
-      margin: 100px auto;
-      max-width: 600px;
-      border-radius: 20px;
-      box-shadow: 0 0 30px rgba(255, 192, 203, 0.9);
-      position: relative;
+      text-align: center;
+      padding-top: 100px;
+      color: white;
       z-index: 10;
+      position: relative;
     }
 
     h1 {
-      font-size: 2.8em;
-      color: #FFD700;
+      font-family: 'Great Vibes', cursive;
+      font-size: 3.5em;
+      margin-bottom: 10px;
     }
 
-    p {
-      font-size: 1.4em;
-      line-height: 1.6;
+    .typing {
+      font-size: 1.5em;
+      margin: 20px auto;
+      max-width: 80%;
+      min-height: 100px;
+    }
+
+    .btn {
+      background: white;
+      color: #ff4b5c;
+      padding: 15px 30px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      margin-top: 30px;
+      box-shadow: 0 5px 20px rgba(255, 105, 135, 0.5);
+      transition: transform 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    #gift-message {
+      display: none;
+      margin-top: 30px;
+      font-size: 1.3em;
+      color: #fff8f8;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      backdrop-filter: blur(5px);
     }
 
     .heart {
-      font-size: 2em;
-      animation: pulse 1s infinite;
-      color: pink;
-      margin-top: 20px;
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.2); }
-    }
-
-    canvas {
       position: fixed;
-      top: 0;
+      width: 20px;
+      height: 20px;
+      background: red;
+      transform: rotate(45deg);
+      top: -20px;
+      animation: fall 10s linear infinite;
+      opacity: 0.8;
+    }
+
+    .heart:before,
+    .heart:after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .heart:before {
+      top: -10px;
       left: 0;
-      z-index: 1;
-      pointer-events: none;
+    }
+
+    .heart:after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-10px) rotate(45deg);
+      }
+      100% {
+        transform: translateY(100vh) rotate(45deg);
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Nhạc nền -->
-  <audio autoplay loop>
-    <source src="https://youtu.be/4N8-qJfFweQ?si=xoi6JgTNCm6pcjy1" type="audio/mpeg">
-    Trình duyệt của bạn không hỗ trợ phát nhạc.
-  </audio>
 
-  <!-- Pháo hoa -->
-  <canvas id="fireworks"></canvas>
-
-  <div class="container">
-    <h1>🎉 Chúc Mừng Sinh Nhật Em Yêu 🎉</h1>
-    <p>
-      Hôm nay là ngày thật tuyệt vời –<br>
-      vì đó là ngày em xuất hiện trên thế giới này 🌟<br><br>
-      Anh chúc em mãi mãi rạng rỡ như những bông hoa, tươi tắn như nắng mai,<br>
-      và đặc biệt là luôn có anh bên cạnh để yêu thương 💞
-    </p>
-    <div class="heart">💖💖💖</div>
-  </div>
-
-  <!-- Script pháo hoa -->
+  <!-- Hiệu ứng trái tim -->
   <script>
-    const canvas = document.getElementById('fireworks');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 10000);
     }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    function createFirework() {
-      const x = Math.random() * canvas.width;
-      const y = Math.random() * canvas.height / 2;
-      const colors = ['#ff2d75', '#ffe600', '#00ffea', '#ff6c00'];
-      for (let i = 0; i < 100; i++) {
-        particles.push({
-          x, y,
-          angle: Math.random() * 2 * Math.PI,
-          speed: Math.random() * 5 + 1,
-          radius: Math.random() * 2 + 1,
-          alpha: 1,
-          color: colors[Math.floor(Math.random() * colors.length)]
-        });
-      }
-    }
-
-    function draw() {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      particles = particles.filter(p => p.alpha > 0);
-      for (let p of particles) {
-        const vx = Math.cos(p.angle) * p.speed;
-        const vy = Math.sin(p.angle) * p.speed + 1;
-        p.x += vx;
-        p.y += vy;
-        p.alpha -= 0.01;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI);
-        ctx.fillStyle = `${p.color}${Math.floor(p.alpha * 255).toString(16).padStart(2, '0')}`;
-        ctx.fill();
-      }
-      requestAnimationFrame(draw);
-    }
-
-    setInterval(createFirework, 1000);
-    draw();
+    setInterval(createHeart, 300);
   </script>
 
+  <div class="container">
+    <h1>Chúc Mừng Sinh Nhật Em Yêu 💖</h1>
+    <div class="typing" id="typing"></div>
+    <button class="btn" id="openGift">🎁 Bấm để mở quà</button>
+
+    <div id="gift-message">
+      Anh chúc em mãi luôn xinh đẹp, hạnh phúc và được yêu thương mỗi ngày.<br>
+      Không chỉ hôm nay mà là mỗi ngày đều như sinh nhật nhé!<br><br>
+      Với tất cả tình yêu của anh 💘
+    </div>
+  </div>
+
+  <!-- Typing Effect -->
+  <script>
+    const text = "Hôm nay là ngày em chào đời...\nVà cũng là ngày anh biết mình thật may mắn vì có em trong đời.\nChúc em sinh nhật thật vui vẻ, nhiều điều bất ngờ và ấm áp!";
+    let index = 0;
+    const speed = 50;
+  
+    function type() {
+      if (index < text.length) {
+        document.getElementById('typing').innerHTML += text.charAt(index);
+        index++;
+        setTimeout(type, speed);
+      }
+    }
+    type();
+  
+    // Gắn sự kiện sau khi DOM đã tải
+    window.onload = function() {
+      const openBtn = document.getElementById('openGift');
+      const giftMsg = document.getElementById('gift-message');
+      openBtn.addEventListener('click', () => {
+        giftMsg.style.display = 'block';
+        openBtn.disabled = true;
+        openBtn.innerText = '🎉 Đã mở quà!';
+      });
+    };
+    const audio = new Audio("https://zingmp3.vn/bai-hat/Happy-Birthday-To-You-AMEE-Hoang-Dung-Obito/ZZ9F8B7E.html");
+  audio.loop = true;
+
+  openBtn.addEventListener('click', () => {
+    giftMsg.style.display = 'block';
+    openBtn.disabled = true;
+    openBtn.innerText = '🎉 Đã mở quà!';
+    audio.play(); // Phát nhạc khi người dùng nhấn nút
+  });
+
+  </script>
+  
 </body>
 </html>
